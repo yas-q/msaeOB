@@ -1,17 +1,18 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
+#' Ini Judul
+#'
+#' @param formula Penjelasan formula
+#' @param vardir Penjelasan vardir
+#' @param weight Penjelasan weight
+#' @param samevar Penjelasan samevar
+#' @param MAXITER Penjelasan MAXITER
+#' @param PRECISION Penjelasan PRECISION
+#' @param data Penjelasan data
+#'
+#' @return Ini return
+#' @export
+#'
+#' @examples
+#' Ini contoh
 
 est_msaeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
                       PRECISION = 1e-04, data)
