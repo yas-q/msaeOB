@@ -2,7 +2,7 @@
 % Please edit documentation in R/est_msaeOB.R
 \name{est_msaeOB}
 \alias{est_msaeOB}
-\title{Ini Judul}
+\title{EBLUPs Optimum Benchmarking based on a Multivariate Fay Herriot (Model 1)}
 \usage{
 est_msaeOB(
   formula,
@@ -15,26 +15,67 @@ est_msaeOB(
 )
 }
 \arguments{
-\item{formula}{Penjelasan formula}
+\item{formula}{an object of class list of formula describe the fitted models}
 
-\item{vardir}{Penjelasan vardir}
+\item{vardir}{matrix containing sampling variances of direct estimators. The order is: \code{var1, cov12, ..., cov1r, var2, cov23, ..., cov2r, ..., cov(r-1)(r), var(r)}}
 
-\item{weight}{Penjelasan weight}
+\item{weight}{matrix containing proportion of units in small areas. The order is: \code{w1, w2, ..., w(r)}}
 
-\item{samevar}{Penjelasan samevar}
+\item{samevar}{logical. If \code{TRUE}, the varians is same. Default is \code{FALSE}}
 
-\item{MAXITER}{Penjelasan MAXITER}
+\item{MAXITER}{maximum number of iterations for Fisher-scoring. Default is 100}
 
-\item{PRECISION}{Penjelasan PRECISION}
+\item{PRECISION}{coverage tolerance limit for the Fisher Scoring algorithm. Default value is \code{1e-4}}
 
-\item{data}{Penjelasan data}
+\item{data}{dataframe containing the variables named in formula, vardir, and weight}
 }
 \value{
-Ini return
+This function returns a list with following objects:
+\item{eblup}{a list containing a value of estimators}
+\itemize{
+  \item est.eblup : a dataframe containing EBLUP estimators
+  \item est.eblupOB : a dataframe containing optimum benchmark estimators
+}
+
+\item{fit}{a list contining following objects:}
+\itemize{
+  \item method : fitting method, named "REML"
+  \item convergence : logical value of convergence of Fisher Scoring
+  \item iterations : number of iterations of Fisher Scoring algorithm
+  \item estcoef : a data frame containing estimated model coefficients (\code{beta, std. error, t value, p-value})
+  \item refvar : estimated random effect variance
+}
+\item{random.effect}{a data frame containing values of random effect estimators}
+\item{agregation}{a data frame containing agregation of direct, EBLUP, and optimum benchmark estimation}
 }
 \description{
-Ini Judul
+This function gives EBLUPs optimum benchmarking based on multivariate Fay-Herriot (Model 1)
 }
 \examples{
-Ini contoh modif
+## load dataset
+data(datamsaeOB)
+
+# Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+
+## Using parameter 'data'
+Fo = list(f1 = Y1 ~ X1 + X2,
+          f2 = Y2 ~ X1 + X2,
+          f3 = Y3 ~ X1 + X2)
+vardir = c("v1", "v12", "v13", "v2", "v23", "v3")
+weight = c("w1", "w2", "w3")
+
+est_msae = est_msaeOB(Fo, vardir, weight, data = datamsaeOB)
+
+## Without parameter 'data'
+Fo = list(f1 = datamsaeOB$Y1 ~ datamsaeOB$X1 + datamsaeOB$X2,
+          f2 = datamsaeOB$Y2 ~ datamsaeOB$X1 + datamsaeOB$X2,
+          f3 = datamsaeOB$Y3 ~ datamsaeOB$X1 + datamsaeOB$X2)
+vardir = datamsaeOB[, c("v1", "v12", "v13", "v2", "v23", "v3")]
+weight = datamsaeOB[, c("w1", "w2", "w3")]
+
+est_msae = est_msaeOB(Fo, vardir, weight)
+
+## Return
+est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
+
 }
