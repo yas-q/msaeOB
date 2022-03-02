@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' Ini contoh
+#' Ini contoh modif
 
 est_msaeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
                       PRECISION = 1e-04, data)

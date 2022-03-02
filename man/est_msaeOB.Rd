@@ -36,5 +36,5 @@ Ini return
 Ini Judul
 }
 \examples{
-Ini contoh
+Ini contoh modif
 }
