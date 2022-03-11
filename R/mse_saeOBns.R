@@ -33,7 +33,7 @@
 #' # Compute MSE EBLUP and Optimum Benchmark
 #'
 #' ## Using parameter 'data'
-#' mse_sae = mse_saeOBns(Y1 ~ X1 + X2, v1, w1, data = datamsaeOBns)
+#' mse_sae = mse_saeOBns(Y1 ~ X1 + X2, v1, w1, c1, data = datamsaeOBns)
 #'
 #' ## Without parameter 'data'
 #' mse_sae = mse_saeOBns(datamsaeOBns$Y1 ~ datamsaeOBns$X1 + datamsaeOBns$X2,
