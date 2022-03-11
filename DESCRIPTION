@@ -14,7 +14,8 @@ BugReports: https://github.com/yas-q/msaeOB/issues
 Suggests: 
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Imports: 
     magic,
@@ -23,3 +24,4 @@ Imports:
     MASS,
     stats
 Depends: R (>= 2.10)
+Config/testthat/edition: 3
