@@ -1,4 +1,7 @@
 
+[![Travis build
+status](https://travis-ci.com/yas-q/msaeOB.svg?branch=master)](https://travis-ci.com/yas-q/msaeOB)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # msaeOB
