@@ -522,4 +522,5 @@ est_msaeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
   result$fit$refvar = t(Vu)
   result$random.effect = random.effect.full
   result$agregation = agregation
+  return(result)
 }
