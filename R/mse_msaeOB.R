@@ -1,18 +1,57 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
+#' @title Parametric Bootstrap Mean Squared Error Estimators of Optimum Benchmarking for Multivariate Small Area Estimation
+#'
+#' @description Calculates the parametric bootstrap mean squared error estimates of optimum benchmarking for multivariate small area estimation
+#'
+#' @param formula an object of class list of formula describe the fitted models
+#' @param vardir matrix containing sampling variances of direct estimators. The order is: \code{var1, cov12, ..., cov1r, var2, cov23, ..., cov2r, ..., cov(r-1)(r), var(r)}
+#' @param weight matrix containing proportion of units in small areas. The order is: \code{w1, w2, ..., w(r)}
+#' @param samevar logical. If \code{TRUE}, the varians is same. Default is \code{FALSE}
+#' @param B number of bootstrap. Default is 1000
+#' @param MAXITER maximum number of iterations for Fisher-scoring. Default is 100
+#' @param PRECISION coverage tolerance limit for the Fisher Scoring algorithm. Default value is \code{1e-4}
+#' @param data dataframe containing the variables named in formula, vardir, and weight
+#'
+#' @return
+#' \item{mse.eblup}{estimated mean squared errors of the EBLUPs for the small domains based on Prasad Rao}
+#' \item{pbmse.eblupOB}{parametric bootstrap mean squared error estimates of the optimum benchmark}
+#' \item{running.time}{time for running function}
+#'
+#' @export mse_msaeOB
+#'
+#' @import abind
+#' @importFrom magic adiag
+#' @importFrom Matrix forceSymmetric
+#' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm cor
+#' @importFrom MASS mvrnorm ginv
+#'
+#' @examples
+#' \donttest{
+#' ## load dataset
+#' data(datamsaeOB)
+#'
+#' # Compute MSE EBLUP and Optimum Benchmark
+#' # This is the long running example
+#' ## Using parameter 'data'
+#' Fo = list(f1 = Y1 ~ X1 + X2,
+#'           f2 = Y2 ~ X1 + X2,
+#'           f3 = Y3 ~ X1 + X2)
+#' vardir = c("v1", "v12", "v13", "v2", "v23", "v3")
+#' weight = c("w1", "w2", "w3")
+#'
+#' mse_msae = mse_msaeOB(Fo, vardir, weight, data = datamsaeOB)
+#'
+#' ## Without parameter 'data'
+#' Fo = list(f1 = datamsaeOB$Y1 ~ datamsaeOB$X1 + datamsaeOB$X2,
+#'           f2 = datamsaeOB$Y2 ~ datamsaeOB$X1 + datamsaeOB$X2,
+#'           f3 = datamsaeOB$Y3 ~ datamsaeOB$X1 + datamsaeOB$X2)
+#' vardir = datamsaeOB[, c("v1", "v12", "v13", "v2", "v23", "v3")]
+#' weight = datamsaeOB[, c("w1", "w2", "w3")]
+#'
+#' mse_msae = mse_msaeOB(Fo, vardir, weight)
+#'
+#' ## Return
+#' mse_msae$pbmse.eblupOB # to see the MSE of Optimum Benchmark
+#' }
 mse_msaeOB<-function (formula, vardir, weight, samevar = FALSE, B = 100,
                       MAXITER = 100, PRECISION = 1e-04, data)
 {

@@ -1,18 +1,45 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
+#' @title Parametric Bootstrap Mean Squared Error Estimators of Optimum Benchmarking for Univariate Small Area Estimation
+#'
+#' @description Calculates the parametric bootstrap mean squared error estimates of optimum benchmarking for univariate small area estimation
+#'
+#' @param formula an object of class list of formula describe the fitted model
+#' @param vardir vector containing sampling variances of direct estimators
+#' @param weight vector containing proportion of units in small areas
+#' @param samevar logical. If \code{TRUE}, the varians is same. Default is \code{FALSE}
+#' @param B number of bootstrap. Default is 1000
+#' @param MAXITER maximum number of iterations for Fisher-scoring. Default is 100
+#' @param PRECISION coverage tolerance limit for the Fisher Scoring algorithm. Default value is \code{1e-4}
+#' @param data dataframe containing the variables named in formula, vardir, and weight
+#'
+#' @return
+#' \item{mse.eblup}{estimated mean squared errors of the EBLUPs for the small domains based on Prasad Rao}
+#' \item{pbmse.eblupOB}{parametric bootstrap mean squared error estimates of the optimum benchmark}
+#' \item{running.time}{time for running function}
+#'
+#' @export mse_saeOB
+#'
+#' @import abind
+#' @importFrom magic adiag
+#' @importFrom Matrix forceSymmetric
+#' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm
+#' @importFrom MASS mvrnorm
+#'
+#' @examples
+#' \donttest{
+#' ## load dataset
+#' data(datamsaeOB)
+#'
+#' # Compute MSE EBLUP and Optimum Benchmark
+#'
+#' ## Using parameter 'data'
+#' mse_sae = mse_saeOB(Y1 ~ X1 + X2, v1, w1, data = datamsaeOB)
+#'
+#' ## Without parameter 'data'
+#' mse_sae = mse_saeOB(datamsaeOB$Y1 ~ datamsaeOB$X1 + datamsaeOB$X2, datamsaeOB$v1, datamsaeOB$w1)
+#'
+#' ## Return
+#' mse_sae$pbmse.eblupOB # to see the MSE Optimum Benchmark estimators
+#' }
 mse_saeOB<-function (formula, vardir, weight, samevar = FALSE, B = 100,
                      MAXITER = 100, PRECISION = 1e-04, data)
 {

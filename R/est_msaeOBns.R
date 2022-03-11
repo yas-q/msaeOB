@@ -1,18 +1,70 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
+#' @title EBLUPs Optimum Benchmarking for Non Sampled Area based on a Multivariate Fay Herriot (Model 1)
+#'
+#' @description This function gives EBLUPs optimum benchmarking for non sampled area based on multivariate Fay-Herriot (Model 1)
+#'
+#' @param formula an object of class list of formula describe the fitted models
+#' @param vardir matrix containing sampling variances of direct estimators. The order is: \code{var1, cov12, ..., cov1r, var2, cov23, ..., cov2r, ..., cov(r-1)(r), var(r)}
+#' @param weight matrix containing proportion of units in small areas. The order is: \code{w1, w2, ..., w(r)}
+#' @param cluster matrix containing cluster of auxiliary variables. The order is: \code{c1, c2, ..., c(r)}
+#' @param samevar logical. If \code{TRUE}, the varians is same. Default is \code{FALSE}
+#' @param MAXITER maximum number of iterations for Fisher-scoring. Default is 100
+#' @param PRECISION coverage tolerance limit for the Fisher Scoring algorithm. Default value is \code{1e-4}
+#' @param data dataframe containing the variables named in formula, vardir, and weight
+#'
+#' @return This function returns a list with following objects:
+#' \item{eblup}{a list containing a value of estimators}
+#' \itemize{
+#'   \item est.eblup : a dataframe containing EBLUP estimators
+#'   \item est.eblupOB : a dataframe containing optimum benchmark estimators
+#' }
+#'
+#' \item{fit}{a list contining following objects:}
+#' \itemize{
+#'   \item method : fitting method, named "REML"
+#'   \item convergence : logical value of convergence of Fisher Scoring
+#'   \item iterations : number of iterations of Fisher Scoring algorithm
+#'   \item estcoef : a data frame containing estimated model coefficients (\code{beta, std. error, t value, p-value})
+#'   \item refvar : estimated random effect variance
+#' }
+#' \item{random.effect}{a data frame containing values of random effect estimators}
+#' \item{agregation}{a data frame containing agregation of direct, EBLUP, and optimum benchmark estimation}
+#' @export est_msaeOBns
+#'
+#' @import abind
+#' @importFrom magic adiag
+#' @importFrom Matrix forceSymmetric
+#' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm
+#' @importFrom MASS mvrnorm
+#'
+#' @examples
+#' ## load dataset
+#' data(datamsaeOBns)
+#'
+#' # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+#'
+#' ## Using parameter 'data'
+#' Fo = list(f1 = Y1 ~ X1 + X2,
+#'           f2 = Y2 ~ X1 + X2,
+#'           f3 = Y3 ~ X1 + X2)
+#' vardir = c("v1", "v12", "v13", "v2", "v23", "v3")
+#' weight = c("w1", "w2", "w3")
+#' cluster = c("c1", "c2", "c3")
+#'
+#' est_msae = est_msaeOBns(Fo, vardir, weight, cluster, data = datamsaeOBns)
+#'
+#' ## Without parameter 'data'
+#' Fo = list(f1 = datamsaeOBns$Y1 ~ datamsaeOBns$X1 + datamsaeOBns$X2,
+#'           f2 = datamsaeOBns$Y2 ~ datamsaeOBns$X1 + datamsaeOBns$X2,
+#'           f3 = datamsaeOBns$Y3 ~ datamsaeOBns$X1 + datamsaeOBns$X2)
+#' vardir = datamsaeOBns[, c("v1", "v12", "v13", "v2", "v23", "v3")]
+#' weight = datamsaeOBns[, c("w1", "w2", "w3")]
+#' cluster = datamsaeOBns[, c("c1", "c2", "c3")]
+#'
+#' est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
+#'
+#' ## Return
+#' est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
+#'
 est_msaeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
                         MAXITER = 100, PRECISION = 1e-04, data)
 {

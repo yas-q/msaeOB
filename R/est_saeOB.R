@@ -1,18 +1,55 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
+#' @title EBLUPs Optimum Benchmarking based on a Univariate Fay-Herriot (Model 1)
+#'
+#' @description This function gives EBLUPs optimum benchmarking based on univariate Fay-Herriot (model 1)
+#'
+#' @param formula an object of class list of formula describe the fitted model
+#' @param vardir vector containing sampling variances of direct estimators
+#' @param weight vector containing proportion of units in small areas
+#' @param samevar logical. If \code{TRUE}, the varians is same. Default is \code{FALSE}
+#' @param MAXITER maximum number of iterations for Fisher-scoring. Default is 100
+#' @param PRECISION coverage tolerance limit for the Fisher Scoring algorithm. Default value is \code{1e-4}
+#' @param data dataframe containing the variables named in formula, vardir, and weight
+#'
+#' @return This function returns a list with following objects:
+#' \item{eblup}{a list containing a value of estimators}
+#' \itemize{
+#'   \item est.eblup : a dataframe containing EBLUP estimators
+#'   \item est.eblupOB : a dataframe containing optimum benchmark estimators
+#' }
+#'
+#' \item{fit}{a list contining following objects:}
+#' \itemize{
+#'   \item method : fitting method, named "REML"
+#'   \item convergence : logical value of convergence of Fisher Scoring
+#'   \item iterations : number of iterations of Fisher Scoring algorithm
+#'   \item estcoef : a data frame containing estimated model coefficients (\code{beta, std. error, t value, p-value})
+#'   \item refvar : estimated random effect variance
+#' }
+#' \item{random.effect}{a data frame containing values of random effect estimators}
+#' \item{agregation}{a data frame containing agregation of direct, EBLUP, and optimum benchmark estimation}
+#' @export est_saeOB
+#'
+#' @import abind
+#' @importFrom magic adiag
+#' @importFrom Matrix forceSymmetric
+#' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm
+#' @importFrom MASS mvrnorm
+#'
+#' @examples
+#' ## load dataset
+#' data(datamsaeOB)
+#'
+#' # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+#'
+#' ## Using parameter 'data'
+#' est_sae = est_saeOB(Y1 ~ X1 + X2, v1, w1, data = datamsaeOB)
+#'
+#' ## Without parameter 'data'
+#' est_sae = est_saeOB(datamsaeOB$Y1 ~ datamsaeOB$X1 + datamsaeOB$X2, datamsaeOB$v1, datamsaeOB$w1)
+#'
+#' ## Return
+#' est_sae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
+#'
 est_saeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
                      PRECISION = 1e-04, data)
 {
@@ -257,7 +294,7 @@ est_saeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
                                agregation.eblup.optimum))
   colnames(agregation) = y_names
   agregation = as.data.frame(agregation)
-  result = list(eblup = list(est.eblup = NA, est.eblupRB = NA),
+  result = list(eblup = list(est.eblup = NA, est.eblupOB = NA),
                 fit = list(method = NA, convergence = NA, iteration = NA,
                            estcoef = NA, refvar = NA), random.effect = NA, agregation = NA)
   result$eblup$est.eblup = eblup
