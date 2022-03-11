@@ -37,7 +37,7 @@ This function returns a list with following objects:
   \item est.eblupOB : a dataframe containing optimum benchmark estimators
 }
 
-\item{fit}{a list contining following objects:}
+\item{fit}{a list containing following objects:}
 \itemize{
   \item method : fitting method, named "REML"
   \item convergence : logical value of convergence of Fisher Scoring

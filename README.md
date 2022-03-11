@@ -20,7 +20,7 @@ You can install the released version of msaeOB from
 install.packages("msaeOB")
 ```
 
-## Atuhors
+## Authors
 
 Muhammad Yasqi Imanda, Zenda Oka Briantiko, Azka Ubaidillah
 

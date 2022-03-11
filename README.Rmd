@@ -25,7 +25,7 @@ You can install the released version of msaeOB from [CRAN](https://CRAN.R-projec
 install.packages("msaeOB")
 ```
 
-## Atuhors
+## Authors
 
 Muhammad Yasqi Imanda, Zenda Oka Briantiko, Azka Ubaidillah
 
