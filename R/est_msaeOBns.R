@@ -40,7 +40,7 @@
 #' ## load dataset
 #' data(datamsaeOBns)
 #'
-#' # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+#' # Compute EBLUP & Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
 #'
 #' ## Using parameter 'data'
 #' \dontrun{

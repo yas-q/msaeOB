@@ -40,7 +40,7 @@
 #' ## load dataset
 #' data(datamsaeOB)
 #'
-#' # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+#' # Compute EBLUP & Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
 #'
 #' ## Using parameter 'data'
 #' Fo = list(f1 = Y1 ~ X1 + X2,

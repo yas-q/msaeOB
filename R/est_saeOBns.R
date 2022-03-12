@@ -40,7 +40,7 @@
 #' ## load dataset
 #' data(datamsaeOBns)
 #'
-#' # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+#' # Compute EBLUP & Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
 #'
 #' ## Using parameter 'data'
 #' est_sae = est_saeOBns(Y1 ~ X1 + X2, v1, w1, c1, data = datamsaeOBns)
