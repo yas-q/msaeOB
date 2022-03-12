@@ -10,6 +10,10 @@ coverage](https://codecov.io/gh/yas-q/msaeOB/branch/master/graph/badge.svg)](htt
 
 # msaeOB
 
+<!-- badges: start -->
+
+<!-- badges: end -->
+
 Implements multivariate optimum benchmarking small area estimation. This
 package provides optimum benchmarking estimation for univariate and
 multivariate small area estimation and its MSE. In fact, MSE estimators
@@ -17,6 +21,14 @@ for optimum benchmark are not readily available, so resampling method
 that called parametric bootstrap is applied. The optimum benchmark model
 and parametric bootstrap in this package are based on the model proposed
 in small area estimation (J.N.K Rao and Isabel Molina, 2015).
+
+## Authors
+
+Muhammad Yasqi Imanda, Zenda Oka Briantiko, Azka Ubaidillah
+
+## Maintainer
+
+Muhammad Yasqi Imanda <221810403@stis.ac.id>
 
 ## Installation
 
@@ -26,14 +38,6 @@ You can install the released version of msaeOB from
 ``` r
 install.packages("msaeOB")
 ```
-
-## Authors
-
-Muhammad Yasqi Imanda, Zenda Oka Briantiko, Azka Ubaidillah
-
-## Maintainer
-
-Muhammad Yasqi Imanda <221810403@stis.ac.id>
 
 ## Functions
 
