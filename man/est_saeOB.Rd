@@ -55,7 +55,7 @@ This function gives EBLUPs optimum benchmarking based on univariate Fay-Herriot 
 ## load dataset
 data(datamsaeOB)
 
-# Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
+# Compute EBLUP & Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
 
 ## Using parameter 'data'
 est_sae = est_saeOB(Y1 ~ X1 + X2, v1, w1, data = datamsaeOB)
