@@ -31,6 +31,7 @@
 #' @export est_msaeOBns
 #'
 #' @import abind
+#' @import wrapr
 #' @importFrom magic adiag
 #' @importFrom Matrix forceSymmetric
 #' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm
