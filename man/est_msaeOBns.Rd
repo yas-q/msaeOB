@@ -68,7 +68,7 @@ vardir = c("v1", "v12", "v13", "v2", "v23", "v3")
 weight = c("w1", "w2", "w3")
 cluster = c("c1", "c2", "c3")
 
-est_msae = est_msaeOBns(Fo, vardir, weight, cluster, data = datamsaeOBns)
+# est_msae = est_msaeOBns(Fo, vardir, weight, cluster, data = datamsaeOBns)
 
 ## Without parameter 'data'
 Fo = list(f1 = datamsaeOBns$Y1 ~ datamsaeOBns$X1 + datamsaeOBns$X2,
@@ -78,9 +78,9 @@ vardir = datamsaeOBns[, c("v1", "v12", "v13", "v2", "v23", "v3")]
 weight = datamsaeOBns[, c("w1", "w2", "w3")]
 cluster = datamsaeOBns[, c("c1", "c2", "c3")]
 
-est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
+# est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
 
 ## Return
-est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
+# est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
 
 }

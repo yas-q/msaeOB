@@ -31,7 +31,6 @@
 #' @export est_msaeOBns
 #'
 #' @import abind
-#' @import wrapr
 #' @importFrom magic adiag
 #' @importFrom Matrix forceSymmetric
 #' @importFrom stats model.frame na.omit model.matrix median pnorm rnorm
@@ -51,7 +50,7 @@
 #' weight = c("w1", "w2", "w3")
 #' cluster = c("c1", "c2", "c3")
 #'
-#' est_msae = est_msaeOBns(Fo, vardir, weight, cluster, data = datamsaeOBns)
+#' # est_msae = est_msaeOBns(Fo, vardir, weight, cluster, data = datamsaeOBns)
 #'
 #' ## Without parameter 'data'
 #' Fo = list(f1 = datamsaeOBns$Y1 ~ datamsaeOBns$X1 + datamsaeOBns$X2,
@@ -61,10 +60,10 @@
 #' weight = datamsaeOBns[, c("w1", "w2", "w3")]
 #' cluster = datamsaeOBns[, c("c1", "c2", "c3")]
 #'
-#' est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
+#' # est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
 #'
 #' ## Return
-#' est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
+#' # est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
 #'
 est_msaeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
                         MAXITER = 100, PRECISION = 1e-04, data)
