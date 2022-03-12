@@ -61,6 +61,7 @@ data(datamsaeOBns)
 # Compute EBLUP and Optimum Benchmark using auxiliary variables X1 and X2 for each dependent variable
 
 ## Using parameter 'data'
+\dontrun{
 Fo = list(f1 = Y1 ~ X1 + X2,
           f2 = Y2 ~ X1 + X2,
           f3 = Y3 ~ X1 + X2)
@@ -82,5 +83,5 @@ est_msae = est_msaeOBns(Fo, vardir, weight, cluster)
 
 ## Return
 est_msae$eblup$est.eblupOB # to see the Optimum Benchmark estimators
-
+}
 }
