@@ -3,3 +3,4 @@
 ^CRAN-SUBMISSION$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^codecov\.yml$
