@@ -1,11 +1,4 @@
 
-[![Travis build
-status](https://travis-ci.com/yas-q/msaeOB.svg?branch=master)](https://travis-ci.com/yas-q/msaeOB)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/yas-q/msaeOB?branch=master&svg=true)](https://ci.appveyor.com/project/yas-q/msaeOB)
-[![Codecov test
-coverage](https://codecov.io/gh/yas-q/msaeOB/branch/master/graph/badge.svg)](https://app.codecov.io/gh/yas-q/msaeOB?branch=master)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # msaeOB
