@@ -153,7 +153,7 @@ est_saeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
     if (k >= MAXITER && diff >= PRECISION) {
       convergence = FALSE
     }
-    Gn = kronecker(diag(Vu), In)
+    Gn = kronecker(Vu, In)
     V = as.matrix(Gn + R)
     Vinv = solve(V)
     XtVinv = t(Vinv %*% X)
@@ -180,7 +180,7 @@ est_saeOB<-function (formula, vardir, weight, samevar = FALSE, MAXITER = 100,
     g2d <- diag(Bi %*% X %*% Q %*% t(X) %*%
                   t(Bi))
     dg <- Vinv - (I - Bi) %*% Vinv
-    g3d <- diag(dg %*% V %*% t(dg))/iF
+    g3d <- diag((dg %*% V %*% t(dg))/as.vector(iF))
     mse <- g1d + g2d + 2 * g3d
     mse <- data.frame(matrix(mse, n, r))
     names(mse) = y_names
