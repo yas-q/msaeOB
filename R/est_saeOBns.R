@@ -207,7 +207,7 @@ est_saeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
                        "t value", "p-value")
     rownames(coef) = colnames(X)
     coef = as.data.frame(coef)
-    Gn.ns = kronecker(diag(Vu), diag(n.ns))
+    Gn.ns = kronecker(Vu, diag(n.ns))
     Vinv.ns = solve(Gn.ns + R.ns)
     Q.ns = ginv(t(Vinv.ns %*% X.ns) %*% X.ns)
     g1.s = diag(Gn %*% Vinv %*% R)
@@ -217,17 +217,17 @@ est_saeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
     g2.ns = diag(R.ns %*% Vinv.ns %*% X.ns %*% Q.ns %*%
                    t(X.ns) %*% t(R.ns %*% Vinv.ns))
     g12.s = matrix(g1.s + g2.s, n.s, r)
-    names(g12.s) = y_names
+    colnames(g12.s) = y_names
     g12.s = data.frame(index = indexs, g12.s)
     g12.ns = matrix(g1.ns + g2.ns, n.ns, r)
-    names(g12.ns) = y_names
+    colnames(g12.ns) = y_names
     g12.ns = data.frame(index = indexns, g12.ns)
     g12 = rbind(g12.s, g12.ns)
     g12 = g12[order(g12$index), ]
     rownames(g12) = g12$index
     g12 = g12[, -1]
     dg = Vinv - Gn %*% Vinv %*% Vinv
-    gg3 = (dg %*% V %*% t(dg))/iF
+    gg3 = (dg %*% V %*% t(dg))/as.vector(iF)
     g3 = diag(gg3)
     g3.matrix = matrix(g3, n.s, r)
     g3.s = data.frame(index = indexs, g3.matrix)
@@ -241,7 +241,7 @@ est_saeOBns<-function (formula, vardir, weight, cluster, samevar = FALSE,
     g3.full = matrix(NA, nrow = n, ncol = r)
     colnames(g3.full) = y_names
     for (i in 1:r) {
-      df = data.frame(cluster[, i], g3.all[, i])
+      df = data.frame(cluster[, i], g3.all)
       for (j in 1:n) {
         if (df[j, 2] %in% NA) {
           df[j, 2] = mean(df[df[, 1] == df[j, 1], 2],
